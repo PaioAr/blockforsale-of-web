@@ -1,11 +1,40 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Nav from '../components/Nav.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import Events from '../components/Events.astro';
+import Launcher from '../components/Launcher.astro';
+import Footer from '../components/Footer.astro';
 ---
 
 <Layout>
-	<Welcome />
+  <Nav />
+  <main>
+    <Hero />
+    <div class="divider"></div>
+    <About />
+    <div class="divider"></div>
+    <Events />
+    <div class="divider"></div>
+    <Launcher />
+  </main>
+  <Footer />
 </Layout>
+
+<script>
+  // Scroll reveal — global, runs once
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+  );
+  reveals.forEach((r) => io.observe(r));
+</script>

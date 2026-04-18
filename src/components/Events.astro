@@ -1,0 +1,319 @@
+---
+interface Event {
+  name: string;
+  season: string;
+  type: string;
+  desc: string;
+  status: 'active' | 'upcoming' | 'finished';
+  tags: string[];
+}
+
+const events: Event[] = [
+  {
+    name: 'UPSIDE',
+    season: 'Temporada I',
+    type: 'Hardcore Survival',
+    desc: 'Supervivencia hardcore de 3 semanas. Dificultad escalable día a día — entidades custom, ambientes hostiles, mecánicas únicas.',
+    status: 'active',
+    tags: ['Hardcore', '3 semanas', 'Fabric mod'],
+  },
+  {
+    name: 'POR ANUNCIAR',
+    season: 'Próximo evento',
+    type: 'TBA',
+    desc: 'El siguiente evento ya está en planificación. Seguinos en Discord para ser los primeros en enterarse.',
+    status: 'upcoming',
+    tags: ['Próximamente'],
+  },
+  {
+    name: 'CumLand',
+    season: 'Temporada 0',
+    type: 'Survival Vanilla',
+    desc: 'El primer evento que dio vida a BlockForSale Events. Pusimos a prueba la dinámica y aprendimos todo lo que hoy aplicamos.',
+    status: 'finished',
+    tags: ['Vanilla', 'Survival', 'Completado'],
+  },
+];
+
+const statusLabel = {
+  active: 'En curso',
+  upcoming: 'Próximo',
+  finished: 'Finalizado',
+};
+---
+
+<section id="eventos">
+  <div class="section-inner">
+
+    <div class="events-header reveal">
+      <div>
+        <span class="section-tag">Eventos</span>
+        <h2 class="section-title">HISTORIAL &<br /><span>CALENDARIO</span></h2>
+      </div>
+      <div class="events-header-right">
+        <p class="events-lead">Cada evento es un mundo nuevo. Distintos formatos, misma dedicación.</p>
+        <div class="event-counter">
+          <span class="ec-num">12+</span>
+          <span class="ec-label">Eventos organizados</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="events-list reveal reveal-delay">
+      {events.map((ev, i) => (
+        <div class={`event-row ${ev.status}`}>
+          <div class="ev-index">0{i + 1}</div>
+          <div class="ev-main">
+            <div class="ev-top">
+              <div class="ev-name">{ev.name}</div>
+              <div class="ev-type">{ev.type}</div>
+            </div>
+            <p class="ev-desc">{ev.desc}</p>
+            <div class="ev-tags">
+              {ev.tags.map(t => <span class="ev-tag">{t}</span>)}
+            </div>
+          </div>
+          <div class="ev-meta">
+            <div class="ev-season">{ev.season}</div>
+            <div class={`ev-status s-${ev.status}`}>{statusLabel[ev.status]}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="events-cta reveal reveal-delay-2">
+      <div class="cta-line"></div>
+      <p>¿Querés participar en el próximo evento?</p>
+      <a href="#" class="btn-primary">Unirse al Discord →</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+  section {
+    padding: 130px 0;
+    background: var(--black2);
+    position: relative;
+    z-index: 1;
+  }
+
+  section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 400px;
+    background: radial-gradient(ellipse 60% 40% at 80% 0%, rgba(204,27,27,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .events-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 64px;
+  }
+
+  .section-title span { color: var(--red); }
+
+  .events-lead {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .event-counter {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    border-left: 2px solid var(--red);
+    padding-left: 16px;
+  }
+
+  .ec-num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    letter-spacing: 2px;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .ec-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+
+  /* Event rows */
+  .events-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .event-row {
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding: 32px;
+    border-bottom: 0.5px solid var(--border);
+    background: var(--surface);
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .event-row:last-child { border-bottom: none; }
+
+  .event-row::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 2px;
+    background: var(--red);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.3s ease;
+  }
+
+  .event-row:hover { background: #191919; }
+  .event-row:hover::before { transform: scaleY(1); }
+
+  .event-row.active::before { transform: scaleY(1); }
+  .event-row.finished { opacity: 0.65; }
+
+  .ev-index {
+    font-family: var(--font-display);
+    font-size: 28px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .event-row.active .ev-index { color: var(--red); }
+
+  .ev-top {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+  }
+
+  .ev-name {
+    font-family: var(--font-display);
+    font-size: 26px;
+    letter-spacing: 2px;
+    color: var(--text);
+  }
+
+  .ev-type {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--red);
+  }
+
+  .ev-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-bottom: 14px;
+    max-width: 600px;
+  }
+
+  .ev-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .ev-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border: 0.5px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 2px;
+  }
+
+  .ev-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .ev-season {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .ev-status {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .s-active {
+    background: rgba(204,27,27,0.12);
+    color: #e08080;
+    border: 0.5px solid var(--border-red);
+  }
+
+  .s-upcoming {
+    background: rgba(255,255,255,0.04);
+    color: var(--text-dim);
+    border: 0.5px solid var(--border);
+  }
+
+  .s-finished {
+    background: transparent;
+    color: var(--text-dim);
+    border: 0.5px solid var(--border);
+  }
+
+  /* CTA */
+  .events-cta {
+    margin-top: 56px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .cta-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+    min-width: 60px;
+  }
+
+  .events-cta p {
+    font-size: 13px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .events-header { grid-template-columns: 1fr; gap: 32px; }
+    .event-row { grid-template-columns: 40px 1fr; }
+    .ev-meta { display: none; }
+  }
+</style>

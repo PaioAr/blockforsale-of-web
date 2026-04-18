@@ -1,0 +1,415 @@
+---
+---
+
+<section id="inicio">
+  <div class="hero-bg"></div>
+  <canvas id="hero-canvas"></canvas>
+  <div id="particles"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      BlockForSale Events — Temporada activa
+    </div>
+
+    <h1 class="hero-title">
+      <span class="tl l1">BLOCK</span><span class="tl l2 red">FOR</span><span class="tl l3">SALE</span>
+    </h1>
+    <div class="title-glow"></div>
+
+    <div class="hero-tagline">
+      <span class="tw">Creamos.</span>
+      <span class="tw">Organizamos.</span>
+      <span class="tw accent">Competimos.</span>
+    </div>
+
+    <p class="hero-sub">
+      Servidores y eventos de Minecraft hechos con pasión.<br />
+      Survival, torneos, UHC, minijuegos y mucho más.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#eventos" class="btn-primary">
+        Ver eventos <span class="arr">→</span>
+      </a>
+      <a href="#nosotros" class="btn-secondary">Quiénes somos</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num" data-target="1">0</div>
+        <div class="stat-label">Eventos realizados</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <div class="stat-num" data-target="1">0</div>
+        <div class="stat-label">Tipos de servidor</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat">
+        <div class="stat-num" data-target="30" data-suffix="+">0</div>
+        <div class="stat-label">Jugadores</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>scroll</span>
+  </div>
+</section>
+
+<style>
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 40px 80px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  #hero-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 75% 55% at 50% 65%, rgba(180,10,10,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 38% 28% at 50% 42%, rgba(204,27,27,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  #particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  :global(.p) {
+    position: absolute;
+    background: var(--red);
+    border-radius: 50%;
+    opacity: 0;
+    animation: fp var(--d,8s) var(--dl,0s) infinite ease-in;
+  }
+
+  @keyframes fp {
+    0%   { transform: translateY(100vh) translateX(0); opacity: 0; }
+    8%   { opacity: 0.8; }
+    92%  { opacity: 0.1; }
+    100% { transform: translateY(-8vh) translateX(var(--dr,20px)); opacity: 0; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Badge */
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 0.5px solid var(--border-red);
+    background: var(--red-subtle);
+    color: #d88;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 2px;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fu 0.7s 0.1s ease forwards;
+  }
+
+  .badge-dot {
+    width: 6px; height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    flex-shrink: 0;
+    animation: bdot 2s infinite;
+  }
+
+  @keyframes bdot {
+    0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(204,27,27,0.6); }
+    50%      { opacity:0.4; box-shadow: 0 0 0 5px rgba(204,27,27,0); }
+  }
+
+  /* Title */
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(82px, 15vw, 164px);
+    line-height: 0.88;
+    letter-spacing: 8px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0 10px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .title-glow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 60%;
+    background: radial-gradient(ellipse, rgba(204,27,27,0.28) 0%, transparent 70%);
+    filter: blur(40px);
+    pointer-events: none;
+    z-index: 1;
+    animation: glow-pulse 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-pulse {
+    0%,100% { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+    50%      { opacity: 0.55; transform: translate(-50%,-50%) scale(0.85); }
+  }
+
+  .tl {
+    display: inline-block;
+    color: var(--text);
+    opacity: 0;
+    transform: translateY(40px) skewX(-4deg);
+    position: relative;
+    z-index: 3;
+    text-shadow:
+      0 0 40px rgba(204,27,27,0.5),
+      0 0 80px rgba(204,27,27,0.2);
+  }
+
+  .tl.red {
+    color: var(--red);
+    text-shadow:
+      0 0 30px rgba(204,27,27,0.9),
+      0 0 70px rgba(204,27,27,0.5),
+      0 0 140px rgba(204,27,27,0.2);
+  }
+
+  .l1 { animation: ti 0.65s 0.2s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .l2 { animation: ti 0.65s 0.32s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .l3 { animation: ti 0.65s 0.44s cubic-bezier(0.16,1,0.3,1) forwards; }
+
+  @keyframes ti {
+    to { opacity: 1; transform: translateY(0) skewX(0); }
+  }
+
+  /* Tagline */
+  .hero-tagline {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fu 0.7s 0.6s ease forwards;
+  }
+
+  .tw {
+    font-family: var(--font-display);
+    font-size: clamp(16px, 2.5vw, 24px);
+    letter-spacing: 3px;
+    color: var(--text-muted);
+  }
+
+  .tw.accent { color: var(--red); }
+
+  .hero-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    letter-spacing: 0.3px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fu 0.7s 0.75s ease forwards;
+  }
+
+  /* Buttons */
+  .hero-actions {
+    margin-top: 44px;
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fu 0.7s 0.9s ease forwards;
+  }
+
+  .arr { transition: transform 0.2s; display: inline-block; }
+  .btn-primary:hover .arr { transform: translateX(5px); }
+
+  /* Stats */
+  .hero-stats {
+    margin-top: 72px;
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    opacity: 0;
+    animation: fu 0.7s 1.1s ease forwards;
+  }
+
+  .stat { text-align: center; }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 46px;
+    letter-spacing: 2px;
+    line-height: 1;
+    color: var(--text);
+    transition: color 0.3s;
+  }
+
+  .stat:hover .stat-num { color: var(--red); }
+
+  .stat-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: 6px;
+  }
+
+  .stat-sep {
+    width: 1px;
+    height: 44px;
+    background: linear-gradient(to bottom, transparent, var(--border), transparent);
+    flex-shrink: 0;
+  }
+
+  /* Scroll hint */
+  .hero-scroll {
+    position: absolute;
+    bottom: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-dim);
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fu 0.7s 1.4s ease forwards;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--red), transparent);
+    animation: sp 2s ease-in-out infinite;
+    transform-origin: top;
+  }
+
+  @keyframes sp {
+    0%,100% { transform: scaleY(1); opacity: 1; }
+    50%      { transform: scaleY(0.35); opacity: 0.25; }
+  }
+
+  @keyframes fu {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    .hero-stats { gap: 24px; flex-wrap: wrap; justify-content: center; }
+    .stat-sep { display: none; }
+    .hero-tagline { gap: 10px; }
+  }
+</style>
+
+<script>
+  // Particles
+  const pc = document.getElementById('particles');
+  if (pc) {
+    for (let i = 0; i < 45; i++) {
+      const p = document.createElement('div');
+      p.classList.add('p');
+      p.style.left = Math.random() * 100 + '%';
+      p.style.setProperty('--d', (7 + Math.random() * 13) + 's');
+      p.style.setProperty('--dl', (Math.random() * 14) + 's');
+      p.style.setProperty('--dr', ((Math.random() - 0.5) * 120) + 'px');
+      const s = (0.8 + Math.random() * 2.5) + 'px';
+      p.style.width = s; p.style.height = s;
+      pc.appendChild(p);
+    }
+  }
+
+  // Canvas dot grid
+  const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
+  if (canvas) {
+    const ctx = canvas.getContext('2d')!;
+    let W = 0, H = 0;
+    const resize = () => { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const COLS = 28, ROWS = 18;
+    const dots = Array.from({ length: (COLS + 1) * (ROWS + 1) }, (_, i) => ({
+      x: (i % (COLS + 1)) / COLS,
+      y: Math.floor(i / (COLS + 1)) / ROWS,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.3 + Math.random() * 0.7,
+    }));
+
+    const draw = (t: number) => {
+      ctx.clearRect(0, 0, W, H);
+      const cx = W / 2, cy = H * 0.55;
+      dots.forEach(d => {
+        const px = d.x * W, py = d.y * H;
+        const dist = Math.hypot(px - cx, py - cy);
+        const prox = 1 - Math.min(dist / (Math.hypot(cx, cy) * 0.55), 1);
+        const pulse = 0.5 + 0.5 * Math.sin(t * d.speed + d.phase);
+        const alpha = prox * pulse * 0.55;
+        if (alpha < 0.015) return;
+        ctx.beginPath();
+        ctx.arc(px, py, 1.3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(204,27,27,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(t2 => draw(t2 / 1000));
+    };
+    requestAnimationFrame(t => draw(t / 1000));
+  }
+
+  // Counters
+  const counters = document.querySelectorAll<HTMLElement>('.stat-num[data-target]');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target as HTMLElement;
+      const target = +el.dataset.target!;
+      const suffix = el.dataset.suffix ?? '';
+      const start = performance.now();
+      const dur = 2000;
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / dur, 1);
+        const ease = 1 - Math.pow(1 - p, 4);
+        el.textContent = Math.round(ease * target) + suffix;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => io.observe(c));
+</script>
