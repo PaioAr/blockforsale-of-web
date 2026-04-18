@@ -7,5 +7,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
+  site: 'https://paioar.github.io', // Reemplaza tu-usuario
+  base: '/blockforsale-of-web',
 });
